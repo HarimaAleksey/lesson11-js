@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            background-color: navy;
+            height: 50px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Способы обработки событий -->
+    <!-- Способ 1 -->
+    <div onclick="alert('меня нажали')"></div>
+    <hr>
+    <!-- Способ 2 -->
+    <!-- не рекомендуемый способ -->
+    <div id="clickableDiv"></div>
+    <script>
+        clickableDiv.onclick = () => {
+            alert('меня нажали 2');
+        };
+    </script>
+    <hr>
+    <!-- Способ 3 -->
+    <!-- Навешивание слушателя на элемент. Является приоритетным -->
+    <div id="clickableDiv2"></div>
+    <script>
+        clickableDiv2.addEventListener('click', () => {
+            alert('меня нажали 3');
+        });
+    </script>
+    <hr>
+
+    <!-- Пример с созданием/удалением слушателя -->
+    <span class="btns">
+        <input type="button" value="Кнопка 1">
+        <input type="button" value="Кнопка 2">
+        <input type="button" value="Кнопка 3">
+        <input type="button" value="Кнопка 4">
+        <input type="text" value="Поле 1">
+    </span>
+    
+    <script>
+        const buttons = document.querySelectorAll('.btns > input[type="button"]');
+        // console.log(buttons);
+        for (const button of buttons) {
+            // button.addEventListener('click', () => {
+            //     alert(this.value); // выведется undefined
+            //     // причина этого в стрелочной ф-и, потому что в них отсутствует контекст
+            // });
+            button.addEventListener('click', handleBtn);
+        }
+
+        function handleBtn() {
+            alert(this.value); // выведет Кнопка №
+            this.removeEventListener('click', handleBtn); // удаляем слушатель с нажатого элемента
+        }
+    </script>
+    <hr>
+</body>
+</html>
